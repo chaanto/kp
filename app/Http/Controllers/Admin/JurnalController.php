@@ -126,7 +126,6 @@ class JurnalController extends Controller
                     Options
                   </button>
                   <div class="dropdown-menu" aria-labelledby="optionMenu">
-                    <button class="dropdown-item" type="button" id="invoice" data-id='.$data->id.'>Print Invoice</button>
                     <button class="dropdown-item" type="button" id="show-detail" data-id='.$data->id.'>Show</button>
                     <button class="dropdown-item" type="button" id="edit" data-id='.$data->id.'>Edit</button>
                     <button class="dropdown-item" type="button" id="delete" data-id='.$data->id.'>Delete</button>

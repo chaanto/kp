@@ -175,30 +175,25 @@ class LabaRugiController extends Controller
             ->where('akun_id', 17)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
+            ->sum('credit');
         $penjualan = $totalPenjualan;
 
         $totalPinjaman = JurnalDetail::select('credit')
             ->where('akun_id', 18)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
+            ->sum('credit');
         $pinjaman = $totalPinjaman;
-
-
-
-
-       
 
         // count all laba dan rugi
         $totalPendapatan = $penjualan + $pinjaman;
         $labaKotor = $bahanBaku + $bahanPembantu + $buruh + $transport + $produksi + $gajiBoss + $gajiKaryawan + $marketing + $alatTulis + $pajak;
         $totalLabaKotor = $totalPendapatan - $labaKotor;
         $totalBebanOperasional = $asset + $maintain + $listrikAir + $administrasi + $angsuran + $bunga ;
-        $totalLabaBersihOperasional = $totalLabaKotor - $totalBebanOperasional;
+        $totalLabaBersih = $totalLabaKotor - $totalBebanOperasional;
     
         LabaRugi::create([
-            'laba_rugi' => $totalLabaBersihOperasional,
+            'laba_rugi' => $totalLabaBersih,
         ]);
 
         $pdf = PDF::loadview('laba-rugi.laporan',
@@ -220,12 +215,12 @@ class LabaRugiController extends Controller
                 'listrikAir' => $listrikAir,
                 'administrasi' => $administrasi,
                 'angsuran' => $angsuran,
+                'bunga' => $bunga,
+                'labaKotor' => $labaKotor,
                 'totalLabaKotor' => $totalLabaKotor,
                 'totalPendapatan' => $totalPendapatan,
                 'totalBebanOperasional' => $totalBebanOperasional,
-                'totalLabaBersihOperasional' => $totalLabaBersihOperasional,
-
-
+                'totalLabaBersih' => $totalLabaBersih,
                 'reportMonthYear' => 'Laporan Bulan '. $month . ' Tahun ' . $year,
             ]
         );

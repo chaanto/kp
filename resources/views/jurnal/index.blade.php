@@ -1,5 +1,5 @@
 @extends('layouts.template.app')
-@section('title', 'Data Jurnal - Purchasing App')
+@section('title', 'Data Jurnal')
 
 @section('contents')
 <div class="page-wrapper">
@@ -89,12 +89,6 @@
         $('body').on('click', '#show-detail', function () {
             let data_id = $(this).data('id');
             let url = "jurnals/" + data_id;
-            $(location).attr('href', url);
-        });
-
-        $('body').on('click', '#invoice', function () {
-            let data_id = $(this).data('id');
-            let url = "jurnals/invoice/" + data_id;
             $(location).attr('href', url);
         });
 
