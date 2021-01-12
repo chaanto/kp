@@ -21,72 +21,108 @@ class AkunSeeder extends Seeder
                 'name' => 'Pembelian Asset (Investasi)',
             ],
             [
-                'code' => '1.1.',
+                'code' => '2.',
                 'name' => 'Pembelian Bahan Baku',
             ],
             [
-                'code' => '1.1.1.',
+                'code' => '3',
                 'name' => 'Pembelian Bahan Pembantu',
             ],
             [
-                'code' => '1.1.2.',
+                'code' => '4',
                 'name' => 'Upah Buruh Produksi',
             ],
             [
-                'code' => '1.1.3.',
+                'code' => '5',
                 'name' => 'Transport (Pengiriman Produk)',
             ],
             [
-                'code' => '1.1.4.',
+                'code' => '6',
                 'name' => 'Biaya Produksi Lain-Lain',
             ],
             [
-                'code' => '1.1.5.',
+                'code' => '7',
                 'name' => 'Gaji Pimpinan',
             ],
             [
-                'code' => '1.1.6.',
+                'code' => '8',
                 'name' => 'Gaji Staf Administrasi dan Umum',
             ],
             [
-                'code' => '1.1.7.',
+                'code' => '9',
                 'name' => 'Biaya Pemeliharaan',
             ],
             [
-                'code' => '1.1.8.',
+                'code' => '10',
                 'name' => 'Biaya Pemasaran',
             ],
             [
-                'code' => '1.1.9.',
+                'code' => '11',
                 'name' => 'Alat Tulis Kantor',
             ],
             [
-                'code' => '1.1.10.',
+                'code' => '12',
                 'name' => 'Listrik, Air, dan Telepon',
             ],
             [
-                'code' => '1.1.11.',
+                'code' => '13',
                 'name' => 'Biaya Administrasi Lain-Lain',
             ],
             [
-                'code' => '1.2.',
+                'code' => '14',
                 'name' => 'Angsuran Pokok',
             ],
             [
-                'code' => '1.2.1.',
+                'code' => '15',
                 'name' => 'Biaya Bunga',
             ],
             [
-                'code' => '1.2.2.',
+                'code' => '16',
                 'name' => 'Biaya Pajak',
             ],
             [
-                'code' => '1.2.3.',
+                'code' => '17',
                 'name' => 'Penerimaan Penjualan',
             ],
             [
-                'code' => '1.2.4.',
+                'code' => '18',
                 'name' => 'Penerimaan Pinjaman',
+            ],
+            [
+                'code' => '19',
+                'name' => 'Modal Awal',
+            ],
+            [
+                'code' => '20',
+                'name' => 'Penarikan Pribadi',
+            ],
+            [
+                'code' => '21',
+                'name' => 'Kas',
+            ],
+            [
+                'code' => '22',
+                'name' => 'Piutang',
+            ],
+            [
+                'code' => '23',
+                'name' => 'Hutang',
+            ],
+            [
+                'code' => '25',
+                'name' => 'Bangunan',
+            ],
+            [
+                'code' => '26',
+                'name' => 'Wesel Bayar',
+            ],
+            [
+                'code' => '27',
+                'name' => 'Persediaan',
+            ],
+            [
+                'code' => '28',
+                'name' => 'Kendaraan',
             ],
         ];
         foreach ($akuns as $akun) {

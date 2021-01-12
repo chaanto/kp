@@ -13,7 +13,7 @@
 	</style>
 	<center>
         <h5>Laporan Perubahan Modal</h4>
-		<h5>CV CHALISTA ENGINEERING BATAM</h4>
+		<h5>Chibi Chef</h4>
 		<h6>{{$reportMonthYear}}</h5>
 	</center>
     @php

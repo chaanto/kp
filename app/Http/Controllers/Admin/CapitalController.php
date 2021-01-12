@@ -30,37 +30,38 @@ class CapitalController extends Controller
             ->orderBy('created_at', 'DESC')
             ->first();
         if($labaRugi == null) {
-            return redirect()->route('perubahan-modal.index')->with('error', "Monthly laba and rugi haven't printed! Please print it first!");
+            return redirect()->route('perubahan-modal.index')->with('error', "Laporan Bulanan Laba dan Rugi belum dicetak! Silahkan cetak Laba dan Rugi terlebih dahulu");
         }
 
         // owner equity
-        $equity = JurnalDetail::select('credit')
-            ->where('akun_id', 32)
+        $modalAwal = JurnalDetail::select('credit')
+            ->where('akun_id', 19)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
             ->orderBy('created_at', 'DESC')
             ->first();
 
         // prive
-        $priveSetorTotal = 0;
-        $priveTarikTotal = 0;
+        $privePlus = 0;
+        $priveMinus = 0;
         $prive = JurnalDetail::select('debit', 'credit')
-            ->where('akun_id', 34)
+            ->where('akun_id', 20)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
             ->get();
+        
         for($i = 0; $i < count($prive); $i++)
         {
-            $priveTarikTotal += $prive[$i]->debit;
-            $priveSetorTotal += $prive[$i]->credit;
+            $priveMinus += $prive[$i]->debit;
+            $privePlus += $prive[$i]->credit;
         }
 
         $pdf = PDF::loadview('perubahan-modal.laporan',
             [
                 'labaRugiTotal' => $labaRugi->laba_rugi,
-                'equityTotal' => $equity->credit,
-                'priveTarikTotal' => $priveTarikTotal,
-                'priveSetorTotal' => $priveSetorTotal,
+                'equityTotal' => $modalAwal->credit,
+                'priveTarikTotal' => $priveMinus,
+                'priveSetorTotal' => $privePlus,
                 'reportMonthYear' => 'Laporan Bulan '. $month . ' Tahun ' . $year,
             ]
         );
