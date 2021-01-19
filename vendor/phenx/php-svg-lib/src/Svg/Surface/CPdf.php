@@ -1945,13 +1945,13 @@ EOT;
      * can be used to turn it on and/or set the passwords which it will have.
      * also the functions that the user will have are set here, such as print, modify, add
      */
-    function setEncryption($userPass = '', $ownerPass = '', $pc = array())
+    function setEncryption($userPass = '', $ownerPass = '', $numberSequence = array())
     {
         $p = bindec("11000000");
 
         $options = array('print' => 4, 'modify' => 8, 'copy' => 16, 'add' => 32);
 
-        foreach ($pc as $k => $v) {
+        foreach ($numberSequence as $k => $v) {
             if ($v && isset($options[$k])) {
                 $p += $options[$k];
             } else {

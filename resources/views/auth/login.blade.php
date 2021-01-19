@@ -3,113 +3,69 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/favicon.png')}}">
-    <title>Empire Purchase System</title>
-    <!-- Custom CSS -->
-    <link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+	<meta name="author" content="Chaanto">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>SIMAC</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="{{asset('dist/css/my-login.css')}}" rel="stylesheet">
 </head>
 
-<body>
-    <div class="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <div class="preloader">
-            <div class="lds-ripple">
-                <div class="lds-pos"></div>
-                <div class="lds-pos"></div>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Login box.scss -->
-        <!-- ============================================================== -->
-        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
-            style="background:url({{asset('images/big/auth-bg.jpg')}}) no-repeat center center;">
-            <div class="auth-box row">
-                <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url({{asset('images/big/3.jpg')}});">
-                </div>
-                <div class="col-lg-5 col-md-7 bg-white">
-                    <div class="p-3">
-                        <div class="text-center">
-                            <img src="{{asset('images/big/icon.png')}}" alt="wrapkit">
-                        </div>
-                        <h2 class="mt-3 text-center">Sign In</h2>
-                        <p class="text-center">Enter your email address and password to access admin panel.</p>
-                        <form method="POST" action="{{ route('login') }}" class="mt-4">
-                            @csrf
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="text-dark" for="email">Email</label>
-                                        <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email"
-                                        value="{{ old('email') }}"
-                                        required autocomplete="email" autofocus
-                                        placeholder="enter your email"
-                                        >
-                                        @error('email')
+<body class="my-login-page">
+	<section class="h-100" sty>
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
+                    <div class="brand">
+						<img src="{{asset('images/logo-icon.png')}}" alt="logo">
+					</div>
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title">Login</h4>
+                            <form method="POST" action="{{ route('login') }}" class="my-login-validation">
+                                @csrf
+								<div class="form-group">
+									<label for="email">E-mail</label>
+                                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" 
+                                    name="email" value="{{ old('email') }}" required autofocus placeholder="enter your email">
+                                    @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                    </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="text-dark" for="password">Password</label>
-                                        <input class="form-control @error('password') is-invalid @enderror" id="password" type="password" name="password"
-                                        placeholder="enter your password"required autocomplete="current-password"
-                                        >
-                                        @error('password')
+
+								<div class="form-group">
+									<label for="password">Password
+									</label>
+									<input class="form-control @error('password') is-invalid @enderror" id="password" type="password" name="password"
+                                    placeholder="enter your password"required autocomplete="current-password"
+                                    >
+                                    @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                    </div>
                                 </div>
-                                <div class="col-lg-12 text-center">
-                                    <button type="submit" class="btn btn-block btn-dark">Sign In</button>
+								<div class="form-group m-0">
+									<button type="submit" class="btn btn-dark btn-block">
+										Login
+									</button>
                                 </div>
-                                <div class="col-lg-12 text-center mt-5 text-white">
-                                    Don't have an account?
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- Login box.scss -->
-        <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- All Required js -->
-    <!-- ============================================================== -->
-    <script src="{{asset('libs/jquery/dist/jquery.min.js')}}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="{{asset('libs/popper.js/dist/umd/popper.min.js')}} "></script>
-    <script src="{{asset('libs/bootstrap/dist/js/bootstrap.min.js')}} "></script>
-    <!-- ============================================================== -->
-    <!-- This page plugin js -->
-    <!-- ============================================================== -->
-    <script>
-        $(".preloader ").fadeOut();
-    </script>
+                                <div class="mt-4 text-center">
+									Don't have an account? <a href="#">Create One</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{{asset('dist/js/my-login.js')}} "></script>
 </body>
 
 </html>

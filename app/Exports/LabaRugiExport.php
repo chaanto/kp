@@ -2,8 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\Sale;
-use App\Models\Purchase;
 use App\Models\Jurnal;
 use App\Models\JurnalDetail;
 use Illuminate\Contracts\View\View;

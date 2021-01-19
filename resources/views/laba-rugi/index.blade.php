@@ -1,5 +1,5 @@
 @extends('layouts.template.app')
-@section('title', 'Laba Rugi - Purchasing App')
+@section('title', 'Laba Rugi')
 
 @section('contents')
 <div class="page-wrapper">

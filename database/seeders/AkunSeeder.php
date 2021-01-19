@@ -17,11 +17,11 @@ class AkunSeeder extends Seeder
         \DB::table('akuns')->delete();
         $akuns = [
             [
-                'code' => '1.',
-                'name' => 'Pembelian Asset (Investasi)',
+                'code' => '1',
+                'name' => 'Asset (Investasi)',
             ],
             [
-                'code' => '2.',
+                'code' => '2',
                 'name' => 'Pembelian Bahan Baku',
             ],
             [
@@ -82,7 +82,7 @@ class AkunSeeder extends Seeder
             ],
             [
                 'code' => '17',
-                'name' => 'Penerimaan Penjualan',
+                'name' => 'Pendapatan',
             ],
             [
                 'code' => '18',
@@ -90,7 +90,7 @@ class AkunSeeder extends Seeder
             ],
             [
                 'code' => '19',
-                'name' => 'Modal Awal',
+                'name' => 'Modal',
             ],
             [
                 'code' => '20',
@@ -123,6 +123,10 @@ class AkunSeeder extends Seeder
             [
                 'code' => '28',
                 'name' => 'Kendaraan',
+            ],
+            [
+                'code' => '29',
+                'name' => 'Pendapatan Lain-Lain',
             ],
         ];
         foreach ($akuns as $akun) {

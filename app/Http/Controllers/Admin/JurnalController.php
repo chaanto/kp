@@ -8,6 +8,7 @@ use App\Models\JurnalDetail;
 use Illuminate\Http\Request;
 use DB;
 use DataTables;
+use Carbon\Carbon;
 
 class JurnalController extends Controller
 {
@@ -28,7 +29,41 @@ class JurnalController extends Controller
      */
     public function create()
     {
-        return view('jurnal.form');
+        $carbon= Carbon::now();
+        $Jurnal = Jurnal::whereYear('created_at', $carbon->year)->count();
+        if ($Jurnal == 0){
+          $Jurnal = 1;
+        }
+        else{
+          $Jurnal += 1;
+        };
+        print('test 1');
+        $sequence = False;
+        if(strlen($Jurnal) < 10){
+            $sequence = '00000';
+            print('test 2');
+        }
+        elseif(strlen($Jurnal) > 9){
+            $sequence = '0000';
+        }
+        elseif(strlen($Jurnal) > 99){
+            $sequence = '000';
+        }
+        elseif(strlen($Jurnal) > 1000){
+            $sequence = '00';
+        }
+        elseif(strlen($Jurnal) > 10000){
+            $sequence = '0';
+        }
+        else{
+            $sequence = '';
+        };
+        print($sequence);
+
+        $generateSequence = $sequence.$Jurnal;
+
+        $numberSequence = 'Journal/'.$carbon->year.'/'.$generateSequence;
+        return view('jurnal.form', compact('numberSequence'));
     }
 
     /**
@@ -54,11 +89,11 @@ class JurnalController extends Controller
                     'jurnal_id' => $jurnal->id,
                     'debit' => $akun['debit'],
                     'credit' => $akun['credit'],
+                    'description' => $akun['description'],
                 ];
             }
 
-            // DB::table('jurnal_details')->insert($jurnalDetail);
-            $jurnal->jurnalDetail()->createMany($jurnalDetail);
+            DB::table('jurnal_details')->insert($jurnalDetail);
             DB::commit();
             return redirect()->route('jurnals.index')->with('status', 'New jurnal created successfully');
         } catch (\Throwable $th) {
@@ -75,7 +110,8 @@ class JurnalController extends Controller
      */
     public function show(Jurnal $jurnal)
     {
-        //
+      $jurnal->jurnalDetail;
+      return view('jurnal.show', compact('jurnal'));
     }
 
     /**
@@ -86,7 +122,9 @@ class JurnalController extends Controller
      */
     public function edit(Jurnal $jurnal)
     {
-        //
+      $jurnal = Jurnal::find($jurnal->id);
+      $jurnal->jurnalDetail;
+      return view('jurnal.form', compact('jurnal'));
     }
 
     /**
@@ -98,7 +136,32 @@ class JurnalController extends Controller
      */
     public function update(Request $request, Jurnal $jurnal)
     {
-        //
+      $request->validate(Jurnal::rules());
+      $request->validate(JurnalDetail::rules());
+      try {
+          DB::beginTransaction();
+
+          $akuns = $request->input('akuns');
+          $jurnal->update($request->except(['akuns']));
+          $jurnal->jurnalDetail()->delete();
+          
+            foreach($akuns as $key => $akun) {
+                $jurnalDetail = [
+                    'akun_id' => $akun['akun_id'],
+                    'jurnal_id' => $jurnal->id,
+                    'debit' => $akun['debit'],
+                    'credit' => $akun['credit'],
+                    'description' => $akun['description'],
+              ];
+            JurnalDetail::create($jurnalDetail);
+          }
+
+          DB::commit();
+          return redirect()->route('jurnals.index')->with('status', 'Jurnal updated successfully');
+      } catch (\Throwable $th) {
+          DB::rollback();
+          return redirect()->route('jurnals.index')->with('error', 'Fail to update jurnal, please try again!');
+      }
     }
 
     /**

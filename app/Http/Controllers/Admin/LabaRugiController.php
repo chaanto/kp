@@ -27,7 +27,6 @@ class LabaRugiController extends Controller
      */
     public function print(Request $request)
     {
-        // return Excel::download(new LabaRugiExport($request->month), 'laba-rugi.xlsx');
         
 
         //receivable account

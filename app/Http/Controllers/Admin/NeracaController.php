@@ -38,44 +38,45 @@ class NeracaController extends Controller
         $capitalTotal=0;
         //activa lancar
         //kas
-        $cash = JurnalDetail::select('debit')
+        $cash = JurnalDetail::select('credit')
             ->where('akun_id', 21)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
+            ->sum('credit');
         $cashTotal = $cash;
         
+        
         //piutang
-        $accountReceivable = JurnalDetail::select('debit')
+        $accountReceivable = JurnalDetail::select('credit')
             ->where('akun_id', 22)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
+            ->sum('credit');
         $ar = $accountReceivable;
 
         // aktiva tidak lancar
 
         //persediaan
-        $persedian = JurnalDetail::select('debit')
+        $persedian = JurnalDetail::select('credit')
             ->where('akun_id', 27)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
+            ->sum('credit');
         $totalPersediaan = $persedian;
         
         //kendaraan
-        $kendaraan = JurnalDetail::select('debit')
+        $kendaraan = JurnalDetail::select('credit')
             ->where('akun_id', 28)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
+            ->sum('credit');
         $totalKendaraan = $kendaraan;
 
-        $bangunan = JurnalDetail::select('debit')
+        $bangunan = JurnalDetail::select('credit')
             ->where('akun_id', 25)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
+            ->sum('credit');
         $totalBangunan = $bangunan;
 
         // pasiva
@@ -83,19 +84,19 @@ class NeracaController extends Controller
         //jangka pendek
 
         //hutang
-        $accountPayable = JurnalDetail::select('credit')
+        $accountPayable = JurnalDetail::select('debit')
             ->where('akun_id', 23)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('credit');
+            ->sum('debit');
         $ap = $accountPayable;
 
         //wesel bayar
-        $wesel = JurnalDetail::select('credit')
+        $wesel = JurnalDetail::select('debit')
             ->where('akun_id', 26)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('credit');
+            ->sum('debit');
         $totalWesel = $wesel;
 
         $capitals = JurnalDetail::select('credit', 'debit')

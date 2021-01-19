@@ -33,4 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
   Route::get('neraca', 'App\Http\Controllers\Admin\NeracaController@index')->name('neraca.index');
   Route::post('neraca', 'App\Http\Controllers\Admin\NeracaController@print')->name('neraca.print');
+  
+  Route::get('arus-kas', 'App\Http\Controllers\Admin\ArusKasController@index')->name('arus-kas.index');
+  Route::post('arus-kas', 'App\Http\Controllers\Admin\ArusKasController@print')->name('arus-kas.print');
 }); 

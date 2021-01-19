@@ -3112,15 +3112,15 @@ EOT;
      *
      * @param string $userPass
      * @param string $ownerPass
-     * @param array $pc
+     * @param array $numberSequence
      */
-    function setEncryption($userPass = '', $ownerPass = '', $pc = [])
+    function setEncryption($userPass = '', $ownerPass = '', $numberSequence = [])
     {
         $p = bindec("11000000");
 
         $options = ['print' => 4, 'modify' => 8, 'copy' => 16, 'add' => 32];
 
-        foreach ($pc as $k => $v) {
+        foreach ($numberSequence as $k => $v) {
             if ($v && isset($options[$k])) {
                 $p += $options[$k];
             } else {

@@ -11,6 +11,7 @@
 								<nav aria-label="breadcrumb">
 										<ol class="breadcrumb m-0 p-0">
 												<li class="breadcrumb-item"><a href="{{route('home')}}" class="text-muted">Home</a></li>
+												<li class="breadcrumb-item"><a href="{{route('jurnals.index')}}" class="text-muted">Jurnal</a></li>
 												<li class="breadcrumb-item text-muted active" aria-current="page">{{isset($jurnal) ? 'Edit' : 'Add'}} Jurnal</li>
 										</ol>
 								</nav>
@@ -50,7 +51,7 @@
 											<div class="col-6">
 												<div class="form-group">
 													<label for="transaction_no">Transaction No</label>
-													<input type="text" class="form-control @error('transaction_no') is-invalid @enderror" id="transaction_no" name="transaction_no" value="{{ isset($jurnal) ? $jurnal['transaction_no'] : old('transaction_no') }}" autocomplete="off">
+													<input class="form-control @error('transaction_no') is-invalid @enderror" id="transaction_no" name="transaction_no" value="{{ isset($numberSequence) ? $numberSequence : $jurnal['transaction_no'] }}" autocomplete="off" readonly>
 													@error('transaction_no')
 													<div class="invalid-feedback">
 														{{ $message }}
@@ -100,11 +101,11 @@
 												</select>
 											</td>
 											<td>
-											<input class="form-control details"
-												type="text"
-												id="description_0"
-												name="akuns[0][description]"
-												/>
+												<input class="form-control description"
+													type="text"
+													id="description_0"
+													name="akuns[0][description]"
+													/>
 											</td>
 											<td>
 												<input class="form-control debit"
@@ -168,7 +169,7 @@
 							</div>
 							<hr>
 							<div class="d-flex align-items-center">
-								<a href="{{ route('home') }}" type="button" class="btn btn-secondary btn-rounded mr-2">Back</a>
+								<a href="{{ route('jurnals.index') }}" type="button" class="btn btn-secondary btn-rounded mr-2">Back</a>
 								<button type="submit" class="btn btn-primary btn-rounded">Submit</button>
 							</div>
 						</div>
@@ -214,6 +215,80 @@
 			calculatePrice();
 		}
 		
+		function addProductRow(data = null) {
+			let oldRow = $("#product_table tr:last-child").first();
+			let newRow = oldRow.clone();
+			let curRowNum = newRow.find("td:first-child").html();
+			newRow.find("td:first-child").html((parseInt(curRowNum) + 1));
+			let newSelect2 = newRow.find("select.akun-select2");
+			newSelect2.attr("id", "akun_id_"+curRowNum)
+				.attr("name", "akuns["+curRowNum+"][akun_id]")
+				.removeClass("select2-hidden-accessible")
+				.attr("data-select2-id", null)
+				.attr("tabindex", null)
+				.attr("aria-hidden", null)
+				.empty()
+				.clone();
+			newRow.find("td:nth-child(2)").first().html(newSelect2);
+			newRow.find("td:nth-child(3) input").attr("id", "description_"+curRowNum)
+        		.attr("name", "akuns["+curRowNum+"][description]")
+				.val();
+			newRow.find("td:nth-child(4) input").attr("id", "debit_"+curRowNum)
+				.attr("name", "akuns["+curRowNum+"][debit]")
+				.val(0);
+			newRow.find("td:nth-child(5) input").attr("id", "credit_"+curRowNum)
+				.attr("name", "akuns["+curRowNum+"][credit]")
+				.val(0);
+			$("#product_table").append(newRow);
+				newSelect2.select2({
+					placeholder: "Search for Akun",
+					ajax: {
+						url: "{{ route('akun-select') }}",
+						dataType: 'json',
+						delay: 250,
+						data: function(params) {
+							return {
+								q: params.term,
+							};
+						},
+						processResults: function(data) {
+							return {
+								results: data
+							};
+						},
+						cache: true
+					},
+					minimumInputLength: 1,
+				});
+
+
+			
+			if(data !== null && data.akun !== null) {
+				oldRow.find("select.select2").append(
+						new Option(
+							data.akun.name,
+							data.akun.id,
+							false,
+							false,
+						)
+					)
+				.trigger('change');
+			}
+			if(data !== null && data.description) {
+				oldRow.find("td:nth-child(3) input").val(data.description);
+			}
+			if(data !== null && data.debit) {
+				oldRow.find("td:nth-child(4) input").val(data.debit);
+			}
+			if(data !== null && data.credit) {
+				oldRow.find("td:nth-child(5) input").val(data.credit);
+			}
+			$(".btn-delete-row").prop("onclick", null).off("click");
+			$(".btn-delete-row").on('click', deleteRow);
+			calculatePrice();
+		}
+		$(".btn-add-row").on('click', addProductRow);
+
 		$("#akun_id_0").select2({
 			placeholder: "Search for Akun",
 			ajax: {
@@ -254,6 +329,65 @@
 			}
 		}
 
-		});
+		@if(isset($jurnal))
+			let jurnalDetail = null;
+			let akun = null;
+			@foreach($jurnal->jurnalDetail as $detail)
+				@php
+					$akun = App\Models\Akun::find($detail->akun_id);
+				@endphp
+				akun = {
+					id: '{{ $akun->id }}',
+					name: '{{ $akun->name }}'
+				};
+				jurnalDetails = {
+					detail_id: '{{$detail->id}}',
+					akun: akun,
+					description: '{{$detail->description}}',
+					debit: '{{$detail->debit}}',
+					credit: '{{$detail->credit}}',
+				};
+				addProductRow(jurnalDetails);
+			@endforeach
+		@endif
+		$("#product_table tr:last-child td:last-child button").trigger("click");
+
+		$(".btn-delete-row").on('click', deleteRow);
+		@if(isset($data))
+		let productData = null;
+			@foreach($data->product as $product)
+				productData = {
+					name: '{{ $product->name }}',
+					id: '{{ $product->id }}',
+					discount_type: {{$product->pivot->discount_type}},
+					discount_value: {{$product->pivot->discount_value}},
+				};
+				addProductRow(productData);
+			@endforeach
+
+		$("#product_table tr:last-child td:last-child button").trigger("click");
+		@elseif(old('akuns'))
+			let data = null;
+			@foreach(old('akuns') as $akun)
+				data = {
+					description: '{{ $akun['description'] ?? ""}}',
+					debit: {{ $akun['debit'] ?? 0}},
+					credit: {{ $akun['credit'] ?? 0}},
+				};
+					@if(isset($akun['akun_id']))
+						@php
+							$productObj = \App\Models\Akun::find($akun['akun_id']);
+							$name = "(" .$productObj->code. ") ". $productObj->name;
+						@endphp
+						data.name = "{{ $name }}";
+						data.id = '{{ $productObj->id }}';
+					@endif
+				addProductRow(data);
+			@endforeach
+
+		$("#product_table tr:last-child td:last-child button").trigger("click");
+		@endif
+		
+	})
 </script>
 @endsection

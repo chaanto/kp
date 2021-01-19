@@ -1,5 +1,5 @@
 @extends('layouts.template.app')
-@section('title', 'Data Akuns - Purchasing App')
+@section('title', 'Akun')
 
 @section('contents')
 <div class="page-wrapper">

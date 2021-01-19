@@ -39,6 +39,11 @@
                             class="hide-menu">Neraca
                               </span></a>
                       </li>
+                      <li class="sidebar-item"> <a class="sidebar-link" href="{{route('arus-kas.index')}}"
+                        aria-expanded="false"><i data-feather="credit-card" class="feather-icon"></i><span
+                            class="hide-menu">Arus Kas
+                              </span></a>
+                      </li>
                   </ul>
               </nav>
               <!-- End Sidebar navigation -->
