@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\JurnalDetail;
 use App\Models\LabaRugi;
+use App\Models\PerubahanModal;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -40,7 +41,7 @@ class CapitalController extends Controller
             ->whereYear('created_at', $year)
             ->orderBy('created_at', 'DESC')
             ->first();
-
+                     
         // prive
         $privePlus = 0;
         $priveMinus = 0;
@@ -49,17 +50,20 @@ class CapitalController extends Controller
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
             ->get();
-        
-        for($i = 0; $i < count($prive); $i++)
-        {
-            $priveMinus += $prive[$i]->debit;
-            $privePlus += $prive[$i]->credit;
-        }
+        $priveMinus = $prive->sum('debit');
+        $privePlus = $prive->sum('credit');
+
+        $penambahanModal = $privePlus + $labaRugi->laba_rugi - $priveMinus;
+        $modalAkhir = $modalAwal->credit + $penambahanModal;
+
+        PerubahanModal::create([
+            'perubahan_modal' => $modalAkhir,
+        ]);
 
         $pdf = PDF::loadview('perubahan-modal.laporan',
             [
                 'labaRugiTotal' => $labaRugi->laba_rugi,
-                'equityTotal' => $modalAwal->credit,
+                'modalAwal' => $modalAwal->credit,
                 'priveTarikTotal' => $priveMinus,
                 'priveSetorTotal' => $privePlus,
                 'reportMonthYear' => 'Laporan Bulan '. $month . ' Tahun ' . $year,

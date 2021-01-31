@@ -82,11 +82,11 @@ class AkunSeeder extends Seeder
             ],
             [
                 'code' => '17',
-                'name' => 'Pendapatan',
+                'name' => 'Penjualan',
             ],
             [
                 'code' => '18',
-                'name' => 'Penerimaan Pinjaman',
+                'name' => 'Pinjaman',
             ],
             [
                 'code' => '19',
@@ -109,23 +109,23 @@ class AkunSeeder extends Seeder
                 'name' => 'Hutang',
             ],
             [
-                'code' => '25',
+                'code' => '24',
                 'name' => 'Bangunan',
             ],
             [
-                'code' => '26',
+                'code' => '25',
                 'name' => 'Wesel Bayar',
             ],
             [
-                'code' => '27',
+                'code' => '26',
                 'name' => 'Persediaan',
             ],
             [
-                'code' => '28',
+                'code' => '27',
                 'name' => 'Kendaraan',
             ],
             [
-                'code' => '29',
+                'code' => '28',
                 'name' => 'Pendapatan Lain-Lain',
             ],
         ];

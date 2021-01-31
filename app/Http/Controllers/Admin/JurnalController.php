@@ -76,7 +76,7 @@ class JurnalController extends Controller
     {
         $request->validate(Jurnal::rules());
         $request->validate(JurnalDetail::rules());
-        
+        $carbon= Carbon::now();
         try {
             DB::beginTransaction();
             $akuns = $request->input('akuns');
@@ -90,6 +90,7 @@ class JurnalController extends Controller
                     'debit' => $akun['debit'],
                     'credit' => $akun['credit'],
                     'description' => $akun['description'],
+                    "created_at" => $carbon,
                 ];
             }
 

@@ -41,6 +41,7 @@ class ArusKasController extends Controller
         $pinjamanMasuk=0; 
         // Arus Kas Masuk
         $penjualan = JurnalDetail::select('credit')
+            ->where('akun_id', 17)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->sum('credit');
         $totalPenjualan = $penjualan;
@@ -52,7 +53,7 @@ class ArusKasController extends Controller
         $ar = $accountReceivable;
 
         $pendapatan = JurnalDetail::select('credit')
-            ->where('akun_id', 29)
+            ->where('akun_id', 28)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->sum('credit');
         $TotalPendapatan = $pendapatan;

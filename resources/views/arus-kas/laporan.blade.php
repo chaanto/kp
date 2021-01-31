@@ -105,7 +105,7 @@
             </tr>
             <tr>
                 <td><p class="ml-4 mb-0">Pembayaran Utang</p></td>
-                <td class="text-right border-0">{{number_format($ar)}}</td>
+                <td class="text-right border-0">{{number_format($ap)}}</td>
             </tr>
             <tr>
                 <td><p class="ml-4 mb-0">Pengambilan Prive</p></td>

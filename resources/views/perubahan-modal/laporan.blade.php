@@ -18,14 +18,14 @@
 	</center>
     @php
         $penambahanModal = $priveSetorTotal + $labaRugiTotal - $priveTarikTotal;
-        $modalAkhir = $equityTotal + $penambahanModal;
+        $modalAkhir = $modalAwal + $penambahanModal;
     @endphp
 	<table class='table'>
 		<tbody>
 			<tr>
                 <td class="font-weight-bold">Modal Awal</td>
                 <td></td>
-                <td class="text-right border-0">{{ number_format($equityTotal) }}</td>
+                <td class="text-right border-0">{{ number_format($modalAwal) }}</td>
             </tr>
             <tr>
                 <td class="font-weight-bold ml">Prive Setor</td>

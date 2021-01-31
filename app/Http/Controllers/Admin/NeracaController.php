@@ -36,68 +36,80 @@ class NeracaController extends Controller
         $totalBangunan = 0;
         $totalWesel=0;
         $capitalTotal=0;
+        $totalKendaraan=0;
         //activa lancar
         //kas
-        $cash = JurnalDetail::select('credit')
+        $cash = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 21)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('credit');
-        $cashTotal = $cash;
+            ->get();
+        for($i = 0; $i < count($cash); $i++) {
+            $cashTotal += ($cash[$i]->credit - $cash[$i]->debit);
+        }
         
         
         //piutang
-        $accountReceivable = JurnalDetail::select('credit')
+        $accountReceivable = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 22)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('credit');
-        $ar = $accountReceivable;
-
+            ->get();
+        for($i = 0; $i < count($accountReceivable); $i++) {
+            $ar += ($accountReceivable[$i]->credit - $accountReceivable[$i]->debit);
+        }
         // aktiva tidak lancar
 
         //persediaan
-        $persedian = JurnalDetail::select('credit')
+        $persedian = JurnalDetail::select('debit', 'credit')
+            ->where('akun_id', 26)
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->get();        
+        for($i = 0; $i < count($persedian); $i++) {
+            $totalPersediaan += ($persedian[$i]->credit - $persedian[$i]->debit);
+        }
+
+        //kendaraan
+        $kendaraan = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 27)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('credit');
-        $totalPersediaan = $persedian;
-        
-        //kendaraan
-        $kendaraan = JurnalDetail::select('credit')
-            ->where('akun_id', 28)
+            ->get();
+        for($i = 0; $i < count($kendaraan); $i++) {
+            $totalKendaraan += ($kendaraan[$i]->credit - $kendaraan[$i]->debit);
+        }
+
+        $bangunan = JurnalDetail::select('debit', 'credit')
+            ->where('akun_id', 24)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('credit');
-        $totalKendaraan = $kendaraan;
-
-        $bangunan = JurnalDetail::select('credit')
-            ->where('akun_id', 25)
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->sum('credit');
-        $totalBangunan = $bangunan;
-
+            ->get();
+        for($i = 0; $i < count($bangunan); $i++) {
+            $totalBangunan += ($bangunan[$i]->credit - $bangunan[$i]->debit);
+        }
         // pasiva
 
         //jangka pendek
 
         //hutang
-        $accountPayable = JurnalDetail::select('debit')
+        $accountPayable = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 23)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $ap = $accountPayable;
-
+            ->get();
+        for($i = 0; $i < count($accountPayable); $i++) {
+            $ap += ($accountPayable[$i]->credit - $accountPayable[$i]->debit);
+        }
         //wesel bayar
-        $wesel = JurnalDetail::select('debit')
-            ->where('akun_id', 26)
+        $wesel = JurnalDetail::select('debit', 'credit')
+            ->where('akun_id', 25)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $totalWesel = $wesel;
+            ->get();
+        for($i = 0; $i < count($wesel); $i++) {
+            $totalWesel += ($wesel[$i]->credit - $wesel[$i]->debit);
+        }
 
         $capitals = JurnalDetail::select('credit', 'debit')
             ->where('akun_id', 19)
@@ -108,10 +120,11 @@ class NeracaController extends Controller
             $capitalTotal += ($capitals[$i]->credit - $capitals[$i]->debit);
         }
 
-        $totalAktivaLancar = $cash + $ar + $persedian;
-        $totalAktivaTidakLancar = $persedian + $bangunan;
+
+        $totalAktivaLancar = $cashTotal + $ar + $totalPersediaan;
+        $totalAktivaTidakLancar = $totalPersediaan + $totalBangunan;
         $pasivaJP = $ap;
-        $pasivaJPan = $wesel;
+        $pasivaJPan = $totalWesel;
         $totalAktiva = $totalAktivaLancar + $totalAktivaTidakLancar;
         $totalKewajibanDanModal = $pasivaJP + $pasivaJPan + $capitalTotal;
 
