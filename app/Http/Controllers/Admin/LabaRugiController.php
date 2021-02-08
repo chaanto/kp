@@ -56,6 +56,8 @@ class LabaRugiController extends Controller
         $dateYear=strtotime($request->month);
         $month=date("m",$dateYear);
         $year=date("Y",$dateYear);
+        $startRawDate=strtotime($request->start_month);
+        $startDate=date($request->start_month);
 
         // get total asset
         $totalAsset = JurnalDetail::select('debit')
@@ -191,9 +193,11 @@ class LabaRugiController extends Controller
         $totalBebanOperasional = $asset + $maintain + $listrikAir + $administrasi + $angsuran + $bunga ;
         $totalLabaBersih = $totalLabaKotor - $totalBebanOperasional;
     
-        LabaRugi::create([
+        $laba_rugi = LabaRugi::create([
             'laba_rugi' => $totalLabaBersih,
         ]);
+        $laba_rugi->created_at = $dateYear;
+        $laba_rugi->save();
 
         $pdf = PDF::loadview('laba-rugi.laporan',
             [

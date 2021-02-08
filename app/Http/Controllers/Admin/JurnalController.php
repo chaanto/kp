@@ -90,7 +90,7 @@ class JurnalController extends Controller
                     'debit' => $akun['debit'],
                     'credit' => $akun['credit'],
                     'description' => $akun['description'],
-                    "created_at" => $carbon,
+                    "created_at" => $jurnal->transaction_date,
                 ];
             }
 

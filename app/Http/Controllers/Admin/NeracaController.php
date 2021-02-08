@@ -122,7 +122,7 @@ class NeracaController extends Controller
 
 
         $totalAktivaLancar = $cashTotal + $ar + $totalPersediaan;
-        $totalAktivaTidakLancar = $totalPersediaan + $totalBangunan;
+        $totalAktivaTidakLancar = $totalKendaraan + $totalBangunan;
         $pasivaJP = $ap;
         $pasivaJPan = $totalWesel;
         $totalAktiva = $totalAktivaLancar + $totalAktivaTidakLancar;
