@@ -19,19 +19,7 @@
         <table class='table'>
             <tbody>
                 <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="font-weight-bold">Pendapatan</td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"  class="text-right border-0"></td>
-                </tr>
-                <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" ><p class="ml-4 mb-0">Penerimaan Penjualan</p></td>
-                    <td style="padding:0px 0px 0px 0px; border:1px solid black;"  class="text-right border-0">{{number_format($penjualan)}}</td>
-                </tr>
-                <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" ><p class="ml-4 mb-0">Penerimaan Pinjaman</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"  class="text-right border-0">{{number_format($pinjaman)}}</td>
-                </tr>
-                <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"  class="font-weight-bold">Total Pendapatan</td>
+                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"  class="font-weight-bold">Pendapatan</td>
                     <td style="padding:0px 3px 0px 3px; border:1px solid black;"  class="text-right font-weight-bold border-0">{{number_format($totalPendapatan)}}</td>
                 </tr>
                 <tr>
@@ -43,36 +31,8 @@
                     <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($bahanBaku)}}</td>
                 </tr>
                 <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Pembelian Bahan Pembantu</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($bahanPembantu)}}</td>
-                </tr>
-                <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Upah Buruh Produksi</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($buruh)}}</td>
-                </tr>
-                <tr>
                     <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Transport (Pengiriman Produk)</p></td>
                     <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($transport)}}</td>
-                </tr>
-                <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Biaya Produksi Lain-Lain</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($produksi)}}</td>
-                </tr>
-                <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Gaji Pimpinan</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($gajiBoss)}}</td>
-                </tr>
-                <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Gaji Staf Administrasi dan Umum</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($gajiKaryawan)}}</td>
-                </tr>
-                <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Biaya Pemasaran</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($marketing)}}</td>
-                </tr>
-                <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Alat Tulis Kantor</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($alatTulis)}}</td>
                 </tr>
                 <tr>
                     <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="font-weight-bold">Total Harga Pokok</td>
@@ -87,8 +47,8 @@
                     <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0"></td>
                 </tr>
                 <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Pembelian Asset (Investasi)</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($asset)}}</td>
+                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Biaya Gaji</p></td>
+                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($gajiKaryawan)}}</td>
                 </tr>
                 <tr>
                     <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Biaya Pemeliharaan</p></td>
@@ -103,16 +63,16 @@
                     <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($administrasi)}}</td>
                 </tr>
                 <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Angsuran Pokok</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($angsuran)}}</td>
+                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Biaya Sewa</p></td>
+                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($sewa)}}</td>
                 </tr>
                 <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Biaya Bunga</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($bunga)}}</td>
+                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Biaya Penyusutan Kendaraan</p></td>
+                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($penyusutan_kendaraan)}}</td>
                 </tr>
                 <tr>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Biaya Pajak</p></td>
-                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($pajak)}}</td>
+                    <td style="padding:0px 3px 0px 3px; border:1px solid black;"><p class="ml-4 mb-0">Biaya Iklan</p></td>
+                    <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="text-right border-0">{{number_format($marketing)}}</td>
                 </tr>
                 <tr>
                     <td style="padding:0px 3px 0px 3px; border:1px solid black;" class="font-weight-bold">Total Beban Operasional</td>

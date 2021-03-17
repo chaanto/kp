@@ -34,22 +34,15 @@ class LabaRugiController extends Controller
         $pinjaman = 0;
 
         //Expense account
-        $asset = 0;
         $bahanBaku = 0;
-        $bahanPembantu = 0;
-        $buruh = 0;
         $transport = 0;
-        $produksi = 0;
-        $gajiBoss = 0;
         $gajiKaryawan = 0;
         $maintain = 0;
         $marketing = 0;
-        $alatTulis = 0;
         $listrikAir = 0;
-        $administrasi =0;
-        $angsuran  =0;
-        $bunga =0;
-        $pajak =0;
+        $sewa =0;
+        $penyusutan_kendaraan =0;
+        $administrasi=0;
 
 
         // month and year
@@ -59,138 +52,132 @@ class LabaRugiController extends Controller
         $startRawDate=strtotime($request->start_month);
         $startDate=date($request->start_month);
 
-        // get total asset
-        $totalAsset = JurnalDetail::select('debit')
-            ->where('akun_id', 1)
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->sum('debit');
-        $asset = $totalAsset;
         
-        $totalBahanBaku = JurnalDetail::select('debit')
+        $totalBahanBaku = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 2)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $bahanBaku = $totalBahanBaku;
+            ->get();
+        for($i = 0; $i < count($totalBahanBaku); $i++) {
+            $bahanBaku += ($totalBahanBaku[$i]->credit - $totalBahanBaku[$i]->debit);
+        }
 
-        $totalBahanPembantu = JurnalDetail::select('debit')
-            ->where('akun_id', 3)
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->sum('debit');
-        $bahanPembantu = $totalBahanPembantu;
-
-        $totalBuruh = JurnalDetail::select('debit')
-            ->where('akun_id', 4)
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->sum('debit');
-        $buruh = $totalBuruh;
-
-        $totalTransport = JurnalDetail::select('debit')
+        $totalTransport = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 5)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $transport = $totalTransport;
+            ->get();
+        for($i = 0; $i < count($totalTransport); $i++) {
+            $transport += ($totalTransport[$i]->credit - $totalTransport[$i]->debit);
+        }
 
-        $totalProduksi = JurnalDetail::select('debit')
-            ->where('akun_id', 6)
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->sum('debit');
-        $produksi = $totalProduksi;
-
-        $totalGajiBoss = JurnalDetail::select('debit')
-            ->where('akun_id', 7)
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->sum('debit');
-        $gajiBoss = $totalGajiBoss;
-
-        $totalGajiKaryawan = JurnalDetail::select('debit')
+        $totalGajiKaryawan = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 8)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $gajiKaryawan = $totalGajiKaryawan;
+            ->get();
+        for($i = 0; $i < count($totalGajiKaryawan); $i++) {
+            $gajiKaryawan += ($totalGajiKaryawan[$i]->credit - $totalGajiKaryawan[$i]->debit);
+        }
 
-        $totalMaintain = JurnalDetail::select('debit')
+        $totalMaintain = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 9)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $maintain = $totalMaintain;
+            ->get();
+        for($i = 0; $i < count($totalMaintain); $i++) {
+            $maintain += ($totalMaintain[$i]->credit - $totalMaintain[$i]->debit);
+        }
 
-        $totalMarketing = JurnalDetail::select('debit')
-            ->where('akun_id', 10)
+        $totalIklan = JurnalDetail::select('debit', 'credit')
+            ->where('akun_id', 33)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $marketing = $totalMarketing;
+            ->get();
+        for($i = 0; $i < count($totalIklan); $i++) {
+            $marketing += ($totalIklan[$i]->credit - $totalIklan[$i]->debit);
+        }
 
-        $totalAlatTulis = JurnalDetail::select('debit')
-            ->where('akun_id', 11)
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->sum('debit');
-        $alatTulis = $totalAlatTulis;
-
-        $totalListrikAir= JurnalDetail::select('debit')
+        $totalListrikAir= JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 12)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $listrikAir = $totalListrikAir;
+            ->get();
+        for($i = 0; $i < count($totalListrikAir); $i++) {
+            $listrikAir += ($totalListrikAir[$i]->credit - $totalListrikAir[$i]->debit);
+        }
 
-        $totalAdministrasi = JurnalDetail::select('debit')
+        $totalSewa = JurnalDetail::select('debit', 'credit')
+            ->where('akun_id', 31)
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->get();
+        for($i = 0; $i < count($totalSewa); $i++) {
+            $sewa += ($totalSewa[$i]->credit - $totalSewa[$i]->debit);
+        }
+
+        $adminis = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 13)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $administrasi = $totalAdministrasi;
+            ->get();
+        for($i = 0; $i < count($adminis); $i++) {
+            $administrasi += ($adminis[$i]->credit - $adminis[$i]->debit);
+        }
 
-        $totalAngsuran = JurnalDetail::select('debit')
-            ->where('akun_id', 14)
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->sum('debit');
-        $angsuran = $totalAngsuran;
-
-        $totalBunga = JurnalDetail::select('debit')
-            ->where('akun_id', 15)
-            ->whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
-            ->sum('debit');
-        $bunga = $totalBunga;
-
-        $totalPajak = JurnalDetail::select('debit')
+        $penyusutan = JurnalDetail::select('debit', 'credit')
             ->where('akun_id', 16)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('debit');
-        $pajak = $totalPajak;
+            ->get();
+        for($i = 0; $i < count($penyusutan); $i++) {
+            $penyusutan_kendaraan += ($penyusutan[$i]->credit - $penyusutan[$i]->debit);
+        }
 
-        $totalPenjualan = JurnalDetail::select('credit')
+        $totalPenjualan = JurnalDetail::select('credit', 'debit')
             ->where('akun_id', 17)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('credit');
-        $penjualan = $totalPenjualan;
+            ->get();
+        for($i = 0; $i < count($totalPenjualan); $i++) {
+            $penjualan += ($totalPenjualan[$i]->credit - $totalPenjualan[$i]->debit);
+        }
 
-        $totalPinjaman = JurnalDetail::select('credit')
+        $total_kas=0;
+
+        $kas = JurnalDetail::select('credit', 'debit')
+            ->where('akun_id', 21)
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->get();
+        for($i = 0; $i < count($kas); $i++) {
+            $total_kas += ($kas[$i]->credit - $kas[$i]->debit);
+        }
+        $total_p_lain=0;
+
+        $p_lain = JurnalDetail::select('credit', 'debit')
+            ->where('akun_id', 28)
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->get();
+        for($i = 0; $i < count($p_lain); $i++) {
+            $total_p_lain += ($p_lain[$i]->credit - $p_lain[$i]->debit);
+        }
+
+        $totalPinjaman = JurnalDetail::select('credit', 'debit')
             ->where('akun_id', 18)
             ->whereMonth('created_at', $month)
             ->whereYear('created_at', $year)
-            ->sum('credit');
-        $pinjaman = $totalPinjaman;
+            ->get();
+        for($i = 0; $i < count($totalPinjaman); $i++) {
+            $pinjaman += ($totalPinjaman[$i]->credit - $totalPinjaman[$i]->debit);
+        }
 
         // count all laba dan rugi
-        $totalPendapatan = $penjualan + $pinjaman;
-        $labaKotor = $bahanBaku + $bahanPembantu + $buruh + $transport + $produksi + $gajiBoss + $gajiKaryawan + $marketing + $alatTulis + $pajak;
+        $totalPendapatan = $total_p_lain;
+        $labaKotor = $bahanBaku + $transport;
         $totalLabaKotor = $totalPendapatan - $labaKotor;
-        $totalBebanOperasional = $asset + $maintain + $listrikAir + $administrasi + $angsuran + $bunga ;
+        $totalBebanOperasional = $marketing + $maintain + $listrikAir + $sewa + $penyusutan_kendaraan + $gajiKaryawan;
         $totalLabaBersih = $totalLabaKotor - $totalBebanOperasional;
     
         $laba_rugi = LabaRugi::create([
@@ -201,29 +188,24 @@ class LabaRugiController extends Controller
 
         $pdf = PDF::loadview('laba-rugi.laporan',
             [
-                'penjualan' => $penjualan,
-                'pinjaman' => $pinjaman,
-                'bahanBaku' => $bahanBaku,
-                'bahanPembantu' => $bahanPembantu,
-                'buruh' => $buruh,
-                'transport' => $transport,
-                'produksi' => $produksi,
-                'gajiBoss' => $gajiBoss,
-                'gajiKaryawan' => $gajiKaryawan,
-                'marketing' => $marketing,
-                'alatTulis' => $alatTulis,
-                'pajak' => $pajak,
-                'asset' => $asset,
-                'maintain' => $maintain,
-                'listrikAir' => $listrikAir,
-                'administrasi' => $administrasi,
-                'angsuran' => $angsuran,
-                'bunga' => $bunga,
-                'labaKotor' => $labaKotor,
-                'totalLabaKotor' => $totalLabaKotor,
-                'totalPendapatan' => $totalPendapatan,
-                'totalBebanOperasional' => $totalBebanOperasional,
-                'totalLabaBersih' => $totalLabaBersih,
+                'penjualan' => abs($penjualan),
+                'pinjaman' => abs($pinjaman),
+                'bahanBaku' => abs($bahanBaku),
+                'transport' => abs($transport),
+                'gajiKaryawan' => abs($gajiKaryawan),
+                'administrasi' => abs($administrasi),
+                'marketing' => abs($marketing),
+                'maintain' => abs($maintain),
+                'listrikAir' => abs($listrikAir),
+                'sewa' => abs($sewa),
+                'penyusutan_kendaraan' => abs($penyusutan_kendaraan),
+                'labaKotor' => abs($labaKotor),
+                'totalLabaKotor' => abs($totalLabaKotor),
+                'totalPendapatan' => abs($totalPendapatan),
+                'totalBebanOperasional' => abs($totalBebanOperasional),
+                'totalLabaBersih' => abs($totalLabaBersih),
+                'total_p_lain' => abs($total_p_lain),
+                'total_kas' => abs($total_kas),
                 'reportMonthYear' => 'Laporan Bulan '. $month . ' Tahun ' . $year,
             ]
         );

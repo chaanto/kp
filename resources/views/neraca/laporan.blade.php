@@ -137,6 +137,10 @@
                         <td style="border:none;padding:2px 2px 2px 2px;" class="text-right border-0">{{number_format($totalBangunan) }}</td>
                     </tr>
                     <tr>
+                        <td style="border:none;padding:2px 2px 2px 2px;"><p class="ml-4 mb-0">Perlengkapan</p></td>
+                        <td style="border:none;padding:2px 2px 2px 2px;" class="text-right border-0">{{number_format($total_perlengkapan) }}</td>
+                    </tr>
+                    <tr>
                         <td style="border:none;padding:2px 2px 2px 2px;" class="font-weight-bold">Total Aktiva Tidak Lancar</td>
                         <td style="border:none;padding:2px 2px 2px 2px;" class="text-right font-weight-bold border-0">{{number_format($totalAktivaTidakLancar)}}</td>
                     </tr>
@@ -195,8 +199,16 @@
                         <td  style="border:none;padding:2px 2px 2px 2px;"class="text-right border-0">{{number_format($capitalTotal)}}</td>
                     </tr>
                     <tr>
+                        <td style="border:none;padding:2px 2px 2px 2px;"><p class="ml-4 mb-0">Laba Ditahan</p></td>
+                        <td  style="border:none;padding:2px 2px 2px 2px;"class="text-right border-0">{{number_format($total_laba)}}</td>
+                    </tr>
+                    <tr>
+                        <td style="border:none;padding:2px 2px 2px 2px;"><p class="ml-4 mb-0">Laba Berjalan</p></td>
+                        <td  style="border:none;padding:2px 2px 2px 2px;"class="text-right border-0">{{number_format($total_laba_berjalan)}}</td>
+                    </tr>
+                    <tr>
                         <td style="border:none;padding:2px 2px 2px 2px;" class="font-weight-bold">Total Modal</td>
-                        <td style="border:none;padding:2px 2px 2px 2px;" class="text-right font-weight-bold border-0">{{number_format($capitalTotal)}}</td>
+                        <td style="border:none;padding:2px 2px 2px 2px;" class="text-right font-weight-bold border-0">{{number_format($total_modal)}}</td>
                     </tr>
                     <tr>
                         <td style="border:none;padding:2px 2px 2px 2px;"></td>

@@ -17,8 +17,8 @@ class CreateJurnalDetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('akun_id');
             $table->unsignedBigInteger('jurnal_id');
-            $table->double('debit', 10, 2)->nullable();
-            $table->double('credit', 10, 2)->nullable();
+            $table->double('debit', 15, 2)->nullable();
+            $table->double('credit', 15, 2)->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -119,32 +119,68 @@ class NeracaController extends Controller
         for($i = 0; $i < count($capitals); $i++) {
             $capitalTotal += ($capitals[$i]->credit - $capitals[$i]->debit);
         }
+        $total_laba = 0;
+        
+        $labaditahan = JurnalDetail::select('credit', 'debit')
+            ->where('akun_id', 29)
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->get();
+        for($i = 0; $i < count($labaditahan); $i++) {
+            $total_laba += ($labaditahan[$i]->credit - $labaditahan[$i]->debit);
+        }
 
+        $total_laba_berjalan = 0;
+        
+        $laba_berjalan = JurnalDetail::select('credit', 'debit')
+            ->where('akun_id', 29)
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->get();
+        for($i = 0; $i < count($laba_berjalan); $i++) {
+            $total_laba_berjalan += ($laba_berjalan[$i]->credit - $laba_berjalan[$i]->debit);
+        }
+
+        $total_perlengkapan = 0;
+
+        $perlengkapan = JurnalDetail::select('credit', 'debit')
+            ->where('akun_id', 4)
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->get();
+        for($i = 0; $i < count($perlengkapan); $i++) {
+            $total_perlengkapan += ($perlengkapan[$i]->credit - $perlengkapan[$i]->debit);
+        }
 
         $totalAktivaLancar = $cashTotal + $ar + $totalPersediaan;
-        $totalAktivaTidakLancar = $totalKendaraan + $totalBangunan;
+        $totalAktivaTidakLancar = $totalKendaraan + $totalBangunan + $total_perlengkapan;
         $pasivaJP = $ap;
         $pasivaJPan = $totalWesel;
         $totalAktiva = $totalAktivaLancar + $totalAktivaTidakLancar;
-        $totalKewajibanDanModal = $pasivaJP + $pasivaJPan + $capitalTotal;
+        $total_modal = $total_laba + $capitalTotal + $total_laba_berjalan;
+        $totalKewajibanDanModal = $pasivaJP + $pasivaJPan + $total_modal;
 
         $pdf = PDF::loadview('neraca.laporan', 
             [
                 'reportMonthYear' => 'Laporan Bulan '. $month . ' Tahun ' . $year,
-                'cashTotal' => $cashTotal,
-                'ar' => $ar,
+                'cashTotal' => $cashTotal * -1,
+                'ar' => $ar * -1,
                 'totalPersediaan' => $totalPersediaan,
-                'totalKendaraan' => $totalKendaraan,
+                'totalKendaraan' => $totalKendaraan * -1,
                 'totalBangunan' => $totalBangunan,
                 'ap' => $ap,
                 'totalWesel' => $totalWesel,
-                'totalAktivaLancar' => $totalAktivaLancar,
-                'totalAktivaTidakLancar' => $totalAktivaTidakLancar,
-                'totalAktiva' => $totalAktiva,
+                'totalAktivaLancar' => $totalAktivaLancar * -1,
+                'totalAktivaTidakLancar' => $totalAktivaTidakLancar * -1,
+                'totalAktiva' => $totalAktiva * -1,
                 'totalKewajibanDanModal' => $totalKewajibanDanModal,
                 'pasivaJP' => $pasivaJP,
                 'pasivaJPan' => $pasivaJPan,
                 'capitalTotal' => $capitalTotal,
+                'total_laba' => $total_laba,
+                'total_modal' => $total_modal,
+                'total_laba_berjalan' => $total_laba_berjalan,
+                'total_perlengkapan' => $total_perlengkapan * -1,
                 
             ]
         );
